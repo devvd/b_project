@@ -18,12 +18,10 @@ namespace b_project.Controllers
         //Creates a static list of posts I want to use in the view
         public static List<BlogViewModel> postList = new List<BlogViewModel>();
 
-        private BlogDbContext _context;
 
-        public BlogController(BlogDbContext context, IBlogRepository blogRepository)
+        public BlogController(IBlogRepository blogRepository)
         {
             _blogRepository = blogRepository;
-            _context = context;
         }
 
         [HttpGet]
