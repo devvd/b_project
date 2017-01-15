@@ -1,0 +1,86 @@
+@model b_project.Models.BlogViewModel
+@using b_project.Controllers
+
+
+@{ 
+    BlogController blogCtrl = new BlogController();
+}
+
+@foreach (var post in BlogController.postList)
+{
+    var total = post.PostLikes - post.PostDislikes;
+    <div class="postDescContainer">
+
+        <!--Date when post was created-->
+        <div class="postPubDate">
+            <div> @post.PostedOn.ToString()</div>
+        </div>
+        <!--Post's Title and a link to the post itself-->
+        <a href="#">
+            <div class="postDescTitle"><h3>@Html.ActionLink(@post.Title, "Post", "Blog", new { slug = @post.UrlSlug}, null)</h3></div>
+        </a>
+        <div class="postDescCategory">
+            <label>Category:&nbsp;</label>
+            <!--Post categories and if there is more than one add a comma between them-->
+            @{
+                var postCats = blogCtrl.GetPostCategories(post.Post);
+                int postcatnum = 0;
+                foreach (var cat in postCats)
+                {
+                    postcatnum++;
+                    <a href="#">
+                        <div class="postDescCatNames">
+                            @cat.Name@if (postcatnum < postCats.Count())
+                            {
+                                @Html.Raw(",&nbsp;")
+                            }
+                        </div>
+                    </a>
+                }
+            }
+        </div>
+        <!--Video Thumbnail-->
+        <div class="postDescBody">
+            @{
+                var postVideos = blogCtrl.GetPostVideos(post.Post);
+                if (postVideos != null)
+                {
+                    <div class="postVidCont">
+                        @foreach (var video in postVideos)
+                        {
+                            <a href="@video.VideoUrl" class="postVidThumb" target="_blank"><img src="@Url.Content(video.VideoThumbnail)" width="200" height="100" /></a>
+                        }
+                    </div>
+                }
+            }
+            <!--Description of the post with a link to the post at the end-->
+            @Html.Raw(post.ShortDescription)
+            @Html.ActionLink("Read More...", "Post", "Blog", new { slug = @post.UrlSlug }, null)
+        </div>
+        <!--Like or Dislike according to the difference between them-->
+        @if (total >= 0)
+        {
+            <table class="postLikes">
+                <tr>
+                    <td style="text-align:center; color:green; font-style:italic;">@total</td>
+                    <td><img src="@Url.Content("~/Content/images/post/like.png")" width="20" height="20" alt="upvote" /></td>
+                </tr>
+            </table>
+        }
+        else
+        {
+            <table class="postDislikes">
+                <tr>
+                    <td style="text-align:center; color:#b50000; font-style:oblique;">@total</td>
+                    <td><img src="@Url.Content("~/Content/images/post/dislike.png")" width="20" height="20" alt="downvote" /></td>
+                </tr>
+            </table>
+        }
+    </div>
+}
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

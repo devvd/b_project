@@ -1,0 +1,22 @@
+@model b_project.Models.BlogViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<div class="blogContainer">
+    <div class="mainblogview">
+        @{Html.RenderPartial("Posts");}
+    </div>
+    <div class="mainblogbar">
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
