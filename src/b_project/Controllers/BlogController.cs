@@ -12,7 +12,6 @@ namespace b_project.Controllers
 {
     public class BlogController : Controller
     {
-        public BlogController() { }
 
         private IBlogRepository _blogRepository;
 
@@ -21,14 +20,10 @@ namespace b_project.Controllers
 
         private BlogDbContext _context;
 
-        public BlogController(BlogDbContext context)
-        {
-            _context = context;
-        }
-
-        public BlogController(IBlogRepository blogRepository)
+        public BlogController(BlogDbContext context, IBlogRepository blogRepository)
         {
             _blogRepository = blogRepository;
+            _context = context;
         }
 
         [HttpGet]
