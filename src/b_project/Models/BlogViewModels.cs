@@ -218,6 +218,7 @@ namespace b_project.Models
         public string ShortDescription { get; set; }
         public string Title { get; set; }
         public IList<Category> PostCategories { get; set; }
+        public IList<PostVideo> PostVideos { get; set; }
         public IList<Tag> PostTags { get; set; }
         public string UrlSlug { get; set; }
     }
