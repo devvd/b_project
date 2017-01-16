@@ -2,10 +2,6 @@
 @using b_project.Controllers
 
 
-@{ 
-    BlogController blogCtrl = new BlogController();
-}
-
 @foreach (var post in BlogController.postList)
 {
     var total = post.PostLikes - post.PostDislikes;
@@ -23,7 +19,7 @@
             <label>Category:&nbsp;</label>
             <!--Post categories and if there is more than one add a comma between them-->
             @{
-                var postCats = blogCtrl.GetPostCategories(post.Post);
+                var postCats = post.PostCategories;
                 int postcatnum = 0;
                 foreach (var cat in postCats)
                 {
@@ -42,7 +38,7 @@
         <!--Video Thumbnail-->
         <div class="postDescBody">
             @{
-                var postVideos = blogCtrl.GetPostVideos(post.Post);
+                var postVideos = post.PostVideos;
                 if (postVideos != null)
                 {
                     <div class="postVidCont">
