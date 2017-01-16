@@ -43,11 +43,13 @@ namespace b_project.Controllers
             var posts = _blogRepository.GetPosts();
             foreach (var post in posts)
             {
+            
+                var postVideos = GetPostVideos(post);
                 var postCategories = GetPostCategories(post);
                 var postTags = GetPostTags(post);
                 var likes = _blogRepository.LikeDislikeCount("postlike", post.Id);
                 var dislikes = _blogRepository.LikeDislikeCount("postdislike", post.Id);
-                postList.Add(new BlogViewModel() { Post = post, Modified = post.Modified, Title = post.Title, ShortDescription = post.ShortDescription, PostedOn = post.PostedOn, ID = post.Id, PostLikes = likes, PostDislikes = dislikes, PostCategories = postCategories, PostTags = postTags, UrlSlug = post.UrlSeo });
+                postList.Add(new BlogViewModel() { Post = post, Modified = post.Modified, Title = post.Title, ShortDescription = post.ShortDescription, PostedOn = post.PostedOn, ID = post.Id, PostLikes = likes, PostDislikes = dislikes, PostCategories = postCategories, PostTags = postTags, UrlSlug = post.UrlSeo, PostVideos = postVideos });
             }
             return PartialView("Posts");
 
